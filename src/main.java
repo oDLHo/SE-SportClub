@@ -24,7 +24,8 @@ public class main {
 //		 } else {
 //			 System.out.println("Cancel the payment!!");
 //		 }
-		 customerCard card = new customerCard();
+//		sellEquipment sell = new sellEquipment();
+		reserveEquipment reserve = new reserveEquipment();
 	}
 
 }
