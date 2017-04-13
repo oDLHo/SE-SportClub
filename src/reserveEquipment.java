@@ -25,6 +25,16 @@ public class reserveEquipment extends sportEquipment{
 	public String getEquipmentName(int equipmentID){
 		return reserveEquipmentRecords.get(equipmentID).get(0);
 	}
+
+	public boolean getStatus(int equipmentID){
+		boolean reserve;
+		if(reserveEquipmentRecords.get(equipmentID).get(1).equals("reserved")){
+			reserve = true;
+		} else{
+			reserve = false;
+		}
+		return reserve;
+	}
 	
 	public void setStatus(int equipmentID,String status){
 		reserveEquipmentRecords.get(equipmentID).set(1,status);
@@ -33,16 +43,6 @@ public class reserveEquipment extends sportEquipment{
 		} catch (IOException e) {
 			System.out.println("Write file fails : "+e.getMessage());
 		}
-	}
-	
-	public boolean isReserved(int equipmentID){
-		boolean reserve;
-		if(reserveEquipmentRecords.get(equipmentID).get(1).equals("reserved")){
-			reserve = true;
-		} else{
-			reserve = false;
-		}
-		return reserve;
 	}
 	
 	private void readFile() throws IOException{
@@ -60,7 +60,7 @@ public class reserveEquipment extends sportEquipment{
 			}
 
 			reserveEquipmentRecords.put(key,recordDetails);
-			System.out.println(reserveEquipmentRecords.toString());
+			System.out.println("hello");
 		}
 
 	}

@@ -33,6 +33,10 @@ public class customerCard {
 		cardRecords.get(cardID).set(1, newDate);
 	}
 	
+	public Map<Integer,List<String>> getAllCard(){
+		return cardRecords;
+	}
+	
 	private void readFile() throws IOException{
 		String line;
 		

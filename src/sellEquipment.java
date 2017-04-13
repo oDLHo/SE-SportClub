@@ -26,19 +26,30 @@ public class sellEquipment extends sportEquipment{
 		return sellEquipmentRecords.get(equipmentID).get(0);
 	}
 	
-	public boolean isOutofStock(int equipmentID){
-		boolean outofstock;
-		int amountofStock = Integer.parseInt(sellEquipmentRecords.get(equipmentID).get(1));
-		if(amountofStock > 0){
-			outofstock = false;
-		} else{
-			outofstock = true;
-		}
-		return outofstock;
+	public int getStock(int equipmentID){
+		return Integer.parseInt(sellEquipmentRecords.get(equipmentID).get(1));
 	}
 	
-	public String getPrice(int equipmentID){
-		return sellEquipmentRecords.get(equipmentID).get(2);
+	public int getPrice(int equipmentID){
+		return Integer.parseInt(sellEquipmentRecords.get(equipmentID).get(2));
+	}
+	
+	public void setStock(int equipmentID, int amount){
+		sellEquipmentRecords.get(equipmentID).set(1,Integer.toString(amount));
+		try {
+			storeData();
+		} catch (IOException e) {
+			System.out.println("Write file fails : "+e.getMessage());
+		}
+	}
+	
+	public void setPrice(int equipmentID, int price){
+		sellEquipmentRecords.get(equipmentID).set(2,Integer.toString(price));
+		try {
+			storeData();
+		} catch (IOException e) {
+			System.out.println("Write file fails : "+e.getMessage());
+		}
 	}
 	
 	private void readFile() throws IOException{

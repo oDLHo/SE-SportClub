@@ -16,12 +16,12 @@ public class makePayment {
 		return paymentId;
 	}
 	
-	public void confirmPayment(int paymentID) {
+	public void confirmPayment(int paymentID,int cardID) {
 		
 		cardReaderInterface cardReader = new cardReaderInterface();
-		int creditcardID = cardReader.scanCreditCard();
+		int creditcardID = cardReader.scanCreditCard(cardID);
 		creditCardValidationService creditValidation = new creditCardValidationService();
-		if(creditValidation.validate(creditcardID)){
+		if(creditValidation.cardValidate(creditcardID)){
 			payment.paidPayment(paymentID);
 			System.out.println("Pay money successful");
 		}

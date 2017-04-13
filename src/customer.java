@@ -43,6 +43,10 @@ public class customer {
 		return customerRecords.get(customerID).get(2);
 	}
 	
+	public Map<Integer,List<String>> getAllCustomer(){
+		return customerRecords;
+	}
+	
 	private void readFile() throws IOException{
 		String line;
 		
