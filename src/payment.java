@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.BreakIterator;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class payment {
 
@@ -19,6 +19,7 @@ public class payment {
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	private static Map<Integer,List<String>> paymentRecords = new HashMap<Integer,List<String>>();
 	private BufferedReader textReader;
+	private Random rand = new Random();
 //	private List<String> recordDetails;
 	
 	public payment(){
@@ -29,15 +30,23 @@ public class payment {
 		}
 	}
 	
-	public void createPaymentRecord(int paymentID, int customerNumber, int equipmentNumber, int totalPrice){
+	public int createPaymentRecord(int customerNumber, int equipmentNumber, int totalPrice){
+		int paymentID;
 		List<String> newRecord = new ArrayList<String>();
+		while(true){
+			int randKey = rand.nextInt(300);
+			if(!paymentRecords.containsKey(randKey)){
+				paymentID = randKey;
+				break;
+			}
+		}
 		newRecord.add(Integer.toString(customerNumber));
 		newRecord.add(Integer.toString(equipmentNumber));
 		newRecord.add(Integer.toString(totalPrice));
 		newRecord.add("false");
 		newRecord.add(dateFormat.format(date));
 		paymentRecords.put(paymentID, newRecord);
-		System.out.print(paymentRecords.get(999));
+		return paymentID;
 	}
 	
 	public void paidPayment(int paymentID){

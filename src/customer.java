@@ -62,7 +62,6 @@ public class customer {
 			}
 
 			customerRecords.put(key,recordDetails);
-			System.out.println(customerRecords.toString());
 		}
 
 	}

@@ -1,4 +1,4 @@
-1 Basketball 10 699
+1 Basketball 8 699
 2 Football 15 699
 3 GolfClub 5 5000
 4 FitnessGloves 30 500

@@ -52,7 +52,6 @@ public class customerCard {
 			}
 
 			cardRecords.put(key,recordDetails);
-			System.out.println(cardRecords.toString());
 		}
 
 	}

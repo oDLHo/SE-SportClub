@@ -7,10 +7,10 @@ public class catalogService {
 	public void showCatalog(String type){
 		catalog catalog = new catalog(type);
 		catalogDetails = catalog.getDetails();
-		System.out.print(printCatalog(type));
+		System.out.print(buildCatalog(type));
 	}
 	
-	private String printCatalog(String type){
+	private String buildCatalog(String type){
 		StringBuilder sb = new StringBuilder();
 		if(type.equals("reserveEquipment")){
 			sb.append("Id\tEquipment Name\tAvailability\n");
@@ -19,9 +19,8 @@ public class catalogService {
 				List<String> record = catalogDetails.get(key);
 				sb.append(key+"\t"+record.get(0)+"\t"+record.get(1));
 				sb.append("\n");
-			}
-			
-			}
+			}	
+		}
 		
 		else if(type.equals("sellEquipment")){
 			sb.append("Id\tEquipment Name\tPrice\tOn Hand\n");

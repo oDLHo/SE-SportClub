@@ -67,7 +67,6 @@ public class sellEquipment extends sportEquipment{
 			}
 
 			sellEquipmentRecords.put(key,recordDetails);
-			System.out.println(sellEquipmentRecords.toString());
 		}
 
 	}

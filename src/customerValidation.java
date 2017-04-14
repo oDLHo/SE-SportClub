@@ -19,7 +19,7 @@ public class customerValidation {
 		return validationStatus;
 	}
 	
-	public boolean validateCustomerCard(int cardNum) {
+	private boolean validateCustomerCard(int cardNum) {
 		customerCard card = new customerCard();
 		cardRecords = card.getAllCard();
 		
@@ -30,7 +30,7 @@ public class customerValidation {
 		}
 	}
 
-	public boolean validateCustomer(int customerNum) {
+	private boolean validateCustomer(int customerNum) {
 		customer cus = new customer();
 		cusRecords = cus.getAllCustomer();
 		

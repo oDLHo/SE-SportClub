@@ -26,18 +26,12 @@ public class reserveEquipment extends sportEquipment{
 		return reserveEquipmentRecords.get(equipmentID).get(0);
 	}
 
-	public boolean getStatus(int equipmentID){
-		boolean reserve;
-		if(reserveEquipmentRecords.get(equipmentID).get(1).equals("reserved")){
-			reserve = true;
-		} else{
-			reserve = false;
-		}
-		return reserve;
+	public String getStatus(int equipmentID){
+		return reserveEquipmentRecords.get(equipmentID).get(1);
 	}
 	
 	public void setStatus(int equipmentID,String status){
-		reserveEquipmentRecords.get(equipmentID).set(1,status);
+		reserveEquipmentRecords.get(equipmentID).set(1, status);
 		try {
 			storeData();
 		} catch (IOException e) {
@@ -60,7 +54,6 @@ public class reserveEquipment extends sportEquipment{
 			}
 
 			reserveEquipmentRecords.put(key,recordDetails);
-			System.out.println("hello");
 		}
 
 	}
