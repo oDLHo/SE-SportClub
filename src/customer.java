@@ -12,13 +12,37 @@ import java.util.Map;
 public class customer {
 	
 	private static Map<Integer,List<String>> customerRecords = new HashMap<Integer,List<String>>();
+	private int customerNumber;
+	private String firstName;
+	private String lastName;
+	private String gender;
 	
-	public customer(){
+//	public customer(){
+//	    try {
+//			readFile();
+//		} catch (IOException e) {
+//			System.out.println("Read file fails : "+e.getMessage());
+//		}
+//	}
+	
+	public customer(int customerNum){
+		
 	    try {
 			readFile();
 		} catch (IOException e) {
 			System.out.println("Read file fails : "+e.getMessage());
 		}
+	    
+		if(customerRecords.get(customerNum) != null){
+			this.firstName = customerRecords.get(customerNum).get(0);
+			this.lastName = customerRecords.get(customerNum).get(1);
+			this.gender = customerRecords.get(customerNum).get(2);
+			this.customerNumber = customerNum;
+		}
+		else{
+			 throw new NullPointerException("NUll woi");
+		}
+		
 	}
 	
 	public void createCustomer(int customerNumber, String firstName, String lastName, String gender){
@@ -34,13 +58,17 @@ public class customer {
 		}
 	}
 
-	public String getName(int customerID){
-		String fullName = customerRecords.get(customerID).get(0)+customerRecords.get(customerID).get(1);
+	public int getCustomerNumber(){
+		return this.customerNumber;
+	}
+	
+	public String getName(){
+		String fullName = this.firstName + " " + this.lastName;
 		return fullName;
 	}
 	
-	public String getGender(int customerID){
-		return customerRecords.get(customerID).get(2);
+	public String getGender(){
+		return this.gender;
 	}
 	
 	public Map<Integer,List<String>> getAllCustomer(){
@@ -63,7 +91,6 @@ public class customer {
 
 			customerRecords.put(key,recordDetails);
 		}
-
 	}
 	
 	private void storeData() throws IOException{

@@ -37,7 +37,6 @@ public class catalog {
 			}
 
 			catalogRecords.put(key,recordDetails);
-//			System.out.println(catalogRecords.toString());
 		}
 
 	}

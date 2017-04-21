@@ -3,8 +3,8 @@
 3 Basketball reserved
 4 GolfClub reserved
 5 FitnessGloves reserved
-6 FitnessGloves available
-7 FitnessGloves available
+6 FitnessGloves reserved
+7 FitnessGloves reserved
 8 Football available
 9 ShoulderPad reserved
 10 ShoulderPad available

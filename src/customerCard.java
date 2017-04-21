@@ -12,25 +12,45 @@ import java.util.Map;
 public class customerCard {
 	
 	private static Map<Integer,List<String>> cardRecords = new HashMap<Integer,List<String>>();
-	
-	public customerCard(){
+	private int customerNumber;
+	private int cardNumber;
+	private String expireDate;
+	public customerCard(int cardID){
 		try {
 			readFile();
 		} catch (IOException e) {
 			System.out.println("Read file fails : "+e.getMessage());
 		}
+		if(cardRecords.get(cardID) != null){
+			this.customerNumber = Integer.parseInt(cardRecords.get(cardID).get(0));
+			this.expireDate = cardRecords.get(cardID).get(1);
+			this.cardNumber = cardID;
+		}
+		else{
+			 throw new NullPointerException("Card null woi");
+		}
 	}
 	
-	public int getCustomer(int cardID){
-		return Integer.parseInt(cardRecords.get(cardID).get(0));
+	public int getCardNumber(){
+		return this.cardNumber;
 	}
 	
-	public int getExpireDate(int cardID){
-		return Integer.parseInt(cardRecords.get(cardID).get(1));
+	public int getCustomer(){
+		return this.customerNumber;
 	}
 	
-	public void setExpireDate(int cardID,String newDate){
-		cardRecords.get(cardID).set(1, newDate);
+	public String getExpireDate(){
+		return this.expireDate;
+	}
+	
+	public void setExpireDate(String newDate) throws IOException{
+		this.expireDate = newDate;
+		cardRecords.get(this.cardNumber).set(1, newDate);
+		try{
+			storeData();
+		}catch(IOException e){
+			throw e;
+		}
 	}
 	
 	public Map<Integer,List<String>> getAllCard(){

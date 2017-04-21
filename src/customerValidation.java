@@ -6,12 +6,12 @@ public class customerValidation {
 	Map<Integer,List<String>> cusRecords;
 	Map<Integer,List<String>> cardRecords;
 	
+	
 	public boolean validate(int cardNum){
 		boolean validationStatus = false;
-		customerValidation cusValidation = new customerValidation();
 		
-		if(cusValidation.validateCustomerCard(cardNum)){
-			if(cusValidation.validateCustomer(new customerCard().getCustomer(cardNum))){
+		if(validateCustomerCard(cardNum)){
+			if(validateCustomer(new customerCard(cardNum).getCustomer())){
 				validationStatus = true;
 			}
 		}
@@ -20,23 +20,23 @@ public class customerValidation {
 	}
 	
 	private boolean validateCustomerCard(int cardNum) {
-		customerCard card = new customerCard();
-		cardRecords = card.getAllCard();
-		
-		if(cardRecords.containsKey(cardNum)){
+		try{
+			customerCard card = new customerCard(cardNum);
+			System.out.println(card.getCustomer());
 			return true;
-		}else{
+		}catch(NullPointerException e){
+			System.out.print(e.getMessage());
 			return false;
 		}
 	}
 
 	private boolean validateCustomer(int customerNum) {
-		customer cus = new customer();
-		cusRecords = cus.getAllCustomer();
-		
-		if(cusRecords.containsKey(customerNum)){
+		try{
+			customer cus = new customer(customerNum);
+			System.out.println(cus.getName());
 			return true;
-		}else{
+		}catch(NullPointerException e){
+			System.out.print(e.getMessage());
 			return false;
 		}
 	}
