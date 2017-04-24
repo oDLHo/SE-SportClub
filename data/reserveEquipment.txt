@@ -5,7 +5,7 @@
 5 FitnessGloves reserved
 6 FitnessGloves reserved
 7 FitnessGloves reserved
-8 Football available
+8 Football reserved
 9 ShoulderPad reserved
 10 ShoulderPad available
 11 ElbowPad reserved

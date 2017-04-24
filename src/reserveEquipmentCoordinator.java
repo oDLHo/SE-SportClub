@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class reserveEquipmentCoordinator {
 	
 	private reserveEquipment reserveEquip;
@@ -17,12 +20,7 @@ public class reserveEquipmentCoordinator {
 	private String reserveItem;
 	private static Map<Integer,List<String>> reserveEquipmentRecords = new HashMap<Integer,List<String>>();;
 	
-	public void showCatalog(){
-		catalogService catalog = new catalogService();
-		catalog.showCatalog("reserveEquipment");
-	}
-	
-	private void reserved(int equipmentID){
+	private boolean reserved(int equipmentID){
 		if(isAvailable(equipmentID)){
 			reserveEquip.setStatus("reserved");
 			reserveEquipmentRecords.get(equipmentID).set(1,"reserved");
@@ -31,40 +29,34 @@ public class reserveEquipmentCoordinator {
 			} catch (IOException e) {
 				System.out.println("Write file fails : "+e.getMessage());
 			}
+			return true;
+		}else{
+			return false;
 		}
 	}
 	
 	private boolean isAvailable(int equipmentID){
-		boolean reserve;
-		if(reserveEquip.getStatus().equals("available")){
-			reserve = true;
-		} else{
-			reserve = false;
-		}
-		return reserve;
+		System.out.println(reserveEquip.getEquipmentID());
+		System.out.println(reserveEquip.getName());
+		System.out.println(reserveEquip.getStatus());
+		return reserveEquip.getStatus();
 	}
 	
-	public void coordinate(){
+	public void coordinate(JFrame frame, int reserveItem){
 		
 		try{
 			readFile();
 		} catch(IOException e){
 			System.out.println(e.getMessage());
 		}
-		
-		showCatalog();
+				reserveEquip = new reserveEquipment(reserveItem,reserveEquipmentRecords.get(reserveItem));
+	
+				if(reserved(reserveItem)){
+					JOptionPane.showMessageDialog(frame, "Reserve Successful", "Reserve Equipment", JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					JOptionPane.showMessageDialog(frame, "Item is not available", "Reserve Equipment", JOptionPane.ERROR_MESSAGE);
+				}
 
-		System.out.println("Which item you want to reserve : ");
-		reserveItem = scanners.next();
-			
-		if(reserveItem.equals("q") || reserveItem.equals("Q")){ 
-			System.out.println("Reserve process is terminated");
-		}
-		else{
-			reserveEquip = new reserveEquipment(Integer.parseInt(reserveItem),reserveEquipmentRecords.get(Integer.parseInt(reserveItem)));
-			reserved(Integer.parseInt(reserveItem));
-			System.out.println("Reserved successful");
-		}
 	}
 	
 	private void readFile() throws IOException{

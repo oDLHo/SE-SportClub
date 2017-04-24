@@ -17,14 +17,6 @@ public class customer {
 	private String lastName;
 	private String gender;
 	
-//	public customer(){
-//	    try {
-//			readFile();
-//		} catch (IOException e) {
-//			System.out.println("Read file fails : "+e.getMessage());
-//		}
-//	}
-	
 	public customer(int customerNum){
 		
 	    try {
