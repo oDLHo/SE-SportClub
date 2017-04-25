@@ -6,27 +6,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class catalog {
-	
-	private static Map<Integer,List<String>> catalogRecords = new HashMap<Integer,List<String>>();
+public class creditCardList {
+
 	private BufferedReader textReader;
+	private Map<Integer, List<String>> creditCardRecords = new HashMap<Integer,List<String>>();
 	
-	public catalog(String catalogType){
-		try {
-			readFile(catalogType);
-		} catch (IOException e) {
+	public creditCardList(){
+		try{
+			readFile();
+		}catch(IOException e){
 			System.out.println(e.getMessage());
 		}
 	}
 	
-	public Map<Integer,List<String>> getDetails(){
-		return catalogRecords;
+	public boolean findCreditCard(int cardID){
+		if(creditCardRecords.get(cardID) != null ){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
-	private void readFile(String fileName) throws IOException{
+	private void readFile() throws IOException{
 		String line;
 		
-		textReader = new BufferedReader(new FileReader("./data/"+fileName+".txt"));
+		textReader = new BufferedReader(new FileReader("./data/creditCard.txt"));
 		
 		while((line = textReader.readLine()) != null){
 			List<String> recordDetails = new ArrayList<String>();
@@ -37,9 +41,7 @@ public class catalog {
 				recordDetails.add(record[i]);
 			}
 
-			catalogRecords.put(key,recordDetails);
+			creditCardRecords.put(key,recordDetails);
 		}
-
 	}
-	
 }
