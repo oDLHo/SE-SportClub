@@ -1,17 +1,13 @@
-import java.util.List;
-import java.util.Map;
-
 public class customerValidation {
-
-	Map<Integer,List<String>> cusRecords;
-	Map<Integer,List<String>> cardRecords;
+	
+	private customerList cusList = new customerList();
+	private customerCardList cusCardList = new customerCardList();
 	
 	public boolean validate(int cardNum){
 		boolean validationStatus = false;
-		customerValidation cusValidation = new customerValidation();
-		
-		if(cusValidation.validateCustomerCard(cardNum)){
-			if(cusValidation.validateCustomer(new customerCard().getCustomer(cardNum))){
+
+		if(validateCustomerCard(cardNum)){
+			if(validateCustomer(cusCardList.findCard(cardNum).getCustomer())){
 				validationStatus = true;
 			}
 		}
@@ -20,10 +16,7 @@ public class customerValidation {
 	}
 	
 	private boolean validateCustomerCard(int cardNum) {
-		customerCard card = new customerCard();
-		cardRecords = card.getAllCard();
-		
-		if(cardRecords.containsKey(cardNum)){
+		if(cusCardList.findCard(cardNum) != null){
 			return true;
 		}else{
 			return false;
@@ -31,14 +24,11 @@ public class customerValidation {
 	}
 
 	private boolean validateCustomer(int customerNum) {
-		customer cus = new customer();
-		cusRecords = cus.getAllCustomer();
-		
-		if(cusRecords.containsKey(customerNum)){
-			return true;
-		}else{
-			return false;
-		}
+			if(cusList.findCustomer(customerNum) != null){
+				return true;
+			}else{
+				return false;
+			}
 	}
 
 }

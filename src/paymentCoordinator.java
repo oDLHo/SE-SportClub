@@ -1,42 +1,37 @@
-import java.util.Scanner;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class paymentCoordinator {
-	
-	private makePayment pay = new makePayment();
-	private int orderID, paymentID, cardID;
-	private String command;
-	private Scanner scaners = new Scanner(System.in);
-	
-	private int makePayment(int orderNum) {
-		return pay.createPayment(orderNum);
-	}
+	private JFrame frame;
+	private makePaymentLogic pay = new makePaymentLogic();;
 
 	private void confirmPayment(int paymentID, int cardID) {
-		cardReaderInterface cardReader = new cardReaderInterface();
-		int creditcardID = cardReader.scanCreditCard(cardID);
 		creditCardValidationService creditValidation = new creditCardValidationService();
-		if(creditValidation.cardValidate(creditcardID)){
+		if(creditValidation.cardValidate(cardID)){
 			pay.confirmPayment(paymentID);
-			System.out.println("Pay money successful");
 		}
 		else{
-			System.out.println("Invalid Credit Card");
+			JOptionPane.showMessageDialog(this.frame, "Credit Card is invalid", "Make Payment", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
-	public void coordinate(){
-		System.out.println("Enter Order Number : ");
-		 orderID = scaners.nextInt();
-		 paymentID = makePayment(orderID);
+	public void coordinate(int orderID, int cusID, JFrame frame){
+		this.frame = frame;
+		int confirm = JOptionPane.showConfirmDialog(null, "Do you want to pay order: "+orderID+" ?","Confirm Payment",JOptionPane.YES_NO_OPTION);
 		 
-		 System.out.println("Do you want to pay Order : "+orderID+"?(Y/N)");
-		 command = scaners.next();
-		 if(command.equals("y")||command.equals("Y")){
-			 System.out.println("Insert your credit card (cardID) : ");
-			 cardID = scaners.nextInt();
-			 confirmPayment(paymentID, cardID);
-		 } else {
-			 System.out.println("Cancel the payment!!");
-		 }
+		if(confirm == JOptionPane.YES_OPTION){
+			String insertCardID = JOptionPane.showInputDialog(null,"Insert Credit Card : ","Make payment",JOptionPane.PLAIN_MESSAGE);
+			int paymentID = pay.createPayment(orderID);
+			if(paymentID != 0){
+				confirmPayment(paymentID, Integer.parseInt(insertCardID));
+				JOptionPane.showMessageDialog(this.frame, "Payment Successful", "Make Payment", JOptionPane.PLAIN_MESSAGE);
+			}else{
+				JOptionPane.showMessageDialog(this.frame, "Payment has terminated", "Confirm Payment", JOptionPane.ERROR_MESSAGE);
+			}
+		}else if(confirm == JOptionPane.NO_OPTION){
+			JOptionPane.showMessageDialog(this.frame, "Payment has terminated", "Confirm Payment", JOptionPane.ERROR_MESSAGE);
+			return ;
+		}
 	}
+	
 }

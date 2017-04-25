@@ -1,128 +1,43 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 public class payment {
 
 	private Date date = new Date();
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-	private static Map<Integer,List<String>> paymentRecords = new HashMap<Integer,List<String>>();
-	private BufferedReader textReader;
-	private Random rand = new Random();
-//	private List<String> recordDetails;
-	
-	public payment(){
-	    try {
-			readFile();
-		} catch (IOException e) {
-			System.out.println("Read file fails : "+e.getMessage());
-		}
-	}
-	
-	public int createPaymentRecord(int customerNumber, int equipmentNumber, int totalPrice){
-		int paymentID;
-		List<String> newRecord = new ArrayList<String>();
-		while(true){
-			int randKey = rand.nextInt(300);
-			if(!paymentRecords.containsKey(randKey)){
-				paymentID = randKey;
-				break;
-			}
-		}
-		newRecord.add(Integer.toString(customerNumber));
-		newRecord.add(Integer.toString(equipmentNumber));
-		newRecord.add(Integer.toString(totalPrice));
-		newRecord.add("false");
-		newRecord.add(dateFormat.format(date));
-		paymentRecords.put(paymentID, newRecord);
-		return paymentID;
-	}
-	
-	public void paidPayment(int paymentID){
-		System.out.println(paymentRecords.get(paymentID));
-		paymentRecords.get(paymentID).set(3, "true");
-		paymentRecords.get(paymentID).set(4, dateFormat.format(date));
-		
-		try {
-			storeData();
-		} catch (IOException e) {
-			System.out.println("Write file fails : "+e.getMessage());
-		}
-	}
-	
-	public int getTotalPrice(int paymentID){
-		return Integer.parseInt(paymentRecords.get(paymentID).get(2));
-	}
-	
-	public String getDate(int paymentID){
-		return paymentRecords.get(paymentID).get(4);
-	}
-	
-	public boolean getPaidStatus(int paymentID){
-		if(paymentRecords.get(paymentID).get(3) == "true"){
-			return true;
-		} else{
-			return false;
-		}
-	}
-	
-	public int getEquipmentNumber(int paymentID){
-		return Integer.parseInt(paymentRecords.get(paymentID).get(2));
-	}
-	
-	public int getCustomerNumber(int paymentID){
-		return Integer.parseInt(paymentRecords.get(paymentID).get(2));
-	}
-	
-	public int getPaymentNumber(int paymentID){
-		return Integer.parseInt(paymentRecords.get(paymentID).get(2));
-	}
-	
-	private void readFile() throws IOException{
-		String line;
-		
-		textReader = new BufferedReader(new FileReader("./data/payment.txt"));
-		
-		while((line = textReader.readLine()) != null){
-			List<String> recordDetails = new ArrayList<String>();
-			String[] record = line.split(" ");
-			int key = Integer.parseInt(record[0]);
-			
-			for(int i=1;i<record.length;i++){
-				recordDetails.add(record[i]);
-			}
+	private int paymentID;
+	private int customerNum;
+	private int orderNum;
+	private float price;
+	private boolean status;
+	private String paidDate;
 
-			paymentRecords.put(key,recordDetails);
-		}
-
+	public payment(int paymentNum, List<String> records){
+		this.paymentID = paymentNum;
+		this.customerNum = Integer.parseInt(records.get(0));
+		this.orderNum = Integer.parseInt(records.get(1));
+		this.price = Float.parseFloat(records.get(2));
+		this.status = Boolean.valueOf(records.get(3));
+		this.paidDate = records.get(4);
 	}
 	
-	private void storeData() throws IOException{
-		
-		StringBuffer recordText = new StringBuffer();
-		for (int key : paymentRecords.keySet()) {
-			List<String> record = paymentRecords.get(key);
-			recordText.append(key);
-			for(int i=0;i<record.size();i++){
-				recordText.append(" "+record.get(i));
-			}
-			recordText.append("\n");
-		}
-		
-		BufferedWriter textWriter = new BufferedWriter(new FileWriter(new File("./data/payment.txt")));
-		textWriter.write(recordText.toString());
-		textWriter.close();
+	public int getPaymentNumber() { return this.paymentID; }
+	
+	public int getCustomerNumber() { return this.customerNum; }
+	
+	public int getEquipmentNumber() { return this.orderNum; }
+	
+	public float getTotalPrice() { return this.price; }
+	
+	public String getDate() { return this.paidDate; }
+	
+	public boolean getPaidStatus() { return this.status; }
+	
+	public void setStatus(boolean status){
+		this.status = status;
+		this.paidDate = dateFormat.format(date);
 	}
 	
 }
