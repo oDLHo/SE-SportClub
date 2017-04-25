@@ -50,7 +50,7 @@ public class cardReaderInterface {
 				cardStatus = new customerValidation().validate(cardID);
 				if(cardStatus){
 					frame.dispose();
-					mainGUI main = new mainGUI(new customerCard(cardID).getCustomer());
+					new mainGUI(new customerCardList().findCard(cardID).getCustomer());
 				}else{
 					JOptionPane.showMessageDialog(frame,"Invalid card number. Plese enter a correct card number","Card number is not valid.",JOptionPane.ERROR_MESSAGE);
 				}

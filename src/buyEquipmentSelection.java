@@ -28,6 +28,7 @@ public class buyEquipmentSelection {
 	private DefaultTableModel ordersModel;
 	private Map<Integer, List<String>> catalogDetails = new HashMap<Integer,List<String>>();
 	private List<Integer> items = new ArrayList<Integer>();
+	private Vector comboBoxItems = new Vector();
 	
 	public void startSession(int cusID){
 
@@ -77,7 +78,6 @@ public class buyEquipmentSelection {
 		frame.getContentPane().add(lblYourOrders);
 		
 		
-		Vector comboBoxItems = new Vector();
 		for(int key : catalogDetails.keySet()){
 			comboBoxItems.add(key+ " "+ catalogDetails.get(key).get(0));
 		}

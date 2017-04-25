@@ -19,7 +19,7 @@ public class reserveEquipment extends sportEquipment{
 		return this.status;
 	}
 	
-	public void setStatus(String status){
-		this.status = Boolean.valueOf(status);
+	public void setStatus(Boolean status){
+		this.status = status;
 	}
 }

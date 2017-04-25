@@ -22,6 +22,7 @@ public class mainGUI {
 	}
 
 	private void initialize(int cusID) {
+		
 		frame = new JFrame("Sport Club");
 		frame.setBounds(new Rectangle(0, 0, 592, 374));
 		frame.getContentPane().setLayout(null);
@@ -31,7 +32,7 @@ public class mainGUI {
 		lblSelectTheProcess.setBounds(188, 50, 185, 30);
 		frame.getContentPane().add(lblSelectTheProcess);
 		
-		lblHello = new JLabel("Hello : "+ new customer(cusID).getName());
+		lblHello = new JLabel("Hello : "+ new customerList().findCustomer(cusID).getName());
 		lblHello.setFont(new Font("Comic Sans MS", Font.BOLD | Font.ITALIC, 16));
 		lblHello.setBounds(10, 11, 238, 30);
 		frame.getContentPane().add(lblHello);

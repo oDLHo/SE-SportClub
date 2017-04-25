@@ -13,84 +13,80 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.swing.JOptionPane;
-
-public class makePayment {
+public class paymentList {
 	
+	private BufferedReader textReader;
+	private Map<Integer, payment> paymentObjs = new HashMap<Integer, payment>();
+	private Map<Integer, List<String>> paymentRecords = new HashMap<Integer,List<String>>();
 	private Random rand = new Random();
 	private Date date = new Date();
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-	private equipmentOrder order;
-	private Map<Integer,List<String>> paymentRecords = new HashMap<Integer,List<String>>();
-	private Map<Integer,List<String>> orderRecords = new HashMap<Integer,List<String>>();
-	private BufferedReader textReader;
 	
-	public makePayment(){
+	public paymentList(){
 		try{
-			readOrdersFile();
+			readFile();
+			for(int key : paymentRecords.keySet()){
+				paymentObjs.put(key, new payment(key, paymentRecords.get(key)));
+			}
+			
 		}catch(IOException e){
 			System.out.println(e.getMessage());
 		}
 	}
 	
-	public void confirmPayment(payment paymentObj) {
-			paidPayment(paymentObj);
-	}
-	
-	private void paidPayment(payment paymentObj){
-		paymentObj.setStatus(true);
-		this.paymentRecords.get(paymentObj.getPaymentNumber()).set(3,"true");
-		try{
-			storeData();
-		}catch(IOException e){
-			
-		}
-	}
-	
-	public payment createPayment(int orderNum, Map<Integer,List<String>> Records){
-		this.paymentRecords = Records;
-		if(orderRecords.get(orderNum) != null ){
-			order = new equipmentOrder(orderNum, orderRecords.get(orderNum));
-			int customerID = order.getCustomerNumber();
-			int totalPrice = order.getTotalPrice();
-			return createPaymentRecord(customerID , orderNum, totalPrice);
+	public payment findPayment(int paymentID){
+		if(paymentObjs.get(paymentID) != null ){
+			return paymentObjs.get(paymentID);
 		}else{
-			System.out.println("no order");
-			return null;
+			throw new NullPointerException();
 		}
-		
 	}
 	
-	private payment createPaymentRecord(int customerNumber, int orderNumber, int totalPrice){
+	
+	public int createPayment(int customerNumber, int orderNumber, float totalPrice){
 		int newPaymentID = 0;
 		List<String> newRecord = new ArrayList<String>();
 		while(true){
-			int randKey = rand.nextInt(300);
+			int randKey = rand .nextInt(300);
 			if(!paymentRecords.containsKey(randKey)){
 				newPaymentID = randKey;
 				break;
 			}
 		}
-		
+
 		newRecord.add(Integer.toString(customerNumber));
 		newRecord.add(Integer.toString(orderNumber));
-		newRecord.add(Integer.toString(totalPrice));
+		newRecord.add(Float.toString(totalPrice));
 		newRecord.add("false");
 		newRecord.add(dateFormat.format(date));
 		this.paymentRecords.put(newPaymentID, newRecord);
+		this.paymentObjs.put(newPaymentID, new payment(newPaymentID, newRecord));
 		
 		try{
 			storeData();
 		}catch(IOException e){
 			
 		}
-		return new payment(newPaymentID, newRecord);
+		
+		return newPaymentID;
 	}
 	
-	private void readOrdersFile() throws IOException{
+	public void setPaymentStatus(int paymentNum, boolean status){
+		
+		this.paymentObjs.get(paymentNum).setStatus(status);
+		this.paymentRecords.get(paymentNum).set(3,Boolean.toString(status));
+		
+		try{
+			storeData();
+		}catch(IOException e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	private void readFile() throws IOException{
 		String line;
 		
-		BufferedReader textReader = new BufferedReader(new FileReader("./data/equipmentOrder.txt"));
+		textReader = new BufferedReader(new FileReader("./data/payment.txt"));
 		
 		while((line = textReader.readLine()) != null){
 			List<String> recordDetails = new ArrayList<String>();
@@ -101,9 +97,8 @@ public class makePayment {
 				recordDetails.add(record[i]);
 			}
 
-			orderRecords.put(key,recordDetails);
+			paymentRecords.put(key,recordDetails);
 		}
-
 	}
 	
 	private void storeData() throws IOException{
@@ -122,4 +117,5 @@ public class makePayment {
 		textWriter.write(recordText.toString());
 		textWriter.close();
 	}
+
 }

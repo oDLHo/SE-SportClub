@@ -10,15 +10,15 @@ public class payment {
 	private int paymentID;
 	private int customerNum;
 	private int orderNum;
-	private int price;
+	private float price;
 	private boolean status;
 	private String paidDate;
-	
+
 	public payment(int paymentNum, List<String> records){
 		this.paymentID = paymentNum;
 		this.customerNum = Integer.parseInt(records.get(0));
 		this.orderNum = Integer.parseInt(records.get(1));
-		this.price = Integer.parseInt(records.get(2));
+		this.price = Float.parseFloat(records.get(2));
 		this.status = Boolean.valueOf(records.get(3));
 		this.paidDate = records.get(4);
 	}
@@ -29,7 +29,7 @@ public class payment {
 	
 	public int getEquipmentNumber() { return this.orderNum; }
 	
-	public int getTotalPrice() { return this.price; }
+	public float getTotalPrice() { return this.price; }
 	
 	public String getDate() { return this.paidDate; }
 	

@@ -18,29 +18,6 @@ public class catalogService {
 		return catalogRecords;
 	}
 	
-//	private String buildCatalog(String type){
-//		StringBuilder sb = new StringBuilder();
-//		if(type.equals("reserveEquipment")){
-//			sb.append("Id\tEquipment Name\tAvailability\n");
-//			
-//			for (int key : catalogDetails.keySet()) {
-//				List<String> record = catalogDetails.get(key);
-//				sb.append(key+"\t"+record.get(0)+"\t"+record.get(1));
-//				sb.append("\n");
-//			}
-//		}
-//		
-//		else if(type.equals("sellEquipment")){
-//			sb.append("Id\tEquipment Name\tPrice\tOn Hand\n");
-//			
-//			for (int key : catalogDetails.keySet()) {
-//				List<String> record = catalogDetails.get(key);
-//				sb.append(key+"\t"+record.get(0)+"\t"+record.get(2)+"\t"+record.get(1));
-//				sb.append("\n");
-//			}
-//		}
-//		return sb.toString();
-//	}
 	
 	private void readFile(String fileName) throws IOException{
 		String line;

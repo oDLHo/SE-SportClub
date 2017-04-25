@@ -4,12 +4,12 @@ public class equipmentOrder {
 	
 	private int orderNum;
 	private int customerNum;
-	private int totalPrice;
+	private float totalPrice;
 	
 	public equipmentOrder(int orderNum, List<String> records){
 	   this.orderNum = orderNum;
 	   this.customerNum = Integer.parseInt(records.get(0));
-	   this.totalPrice = Integer.parseInt(records.get(1));
+	   this.totalPrice = Float.parseFloat(records.get(1));
 	}
 	
 	public int getOrderNumber(){
@@ -20,7 +20,7 @@ public class equipmentOrder {
 		return this.customerNum;
 	}
 	
-	public int getTotalPrice(){
+	public float getTotalPrice(){
 		return this.totalPrice;
 	}
 
