@@ -1,5 +1,5 @@
-1 Basketball 17 699
-2 Football 13 699
+1 Basketball 12 699
+2 Football 12 699
 3 GolfClub 39 5000
 4 FitnessGloves 29 500
 5 ShoulderPad 30 450

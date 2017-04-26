@@ -44,31 +44,40 @@ public class paymentList {
 	
 	
 	public int createPayment(int customerNumber, int orderNumber, float totalPrice){
-		int newPaymentID = 0;
-		List<String> newRecord = new ArrayList<String>();
-		while(true){
-			int randKey = rand .nextInt(300);
-			if(!paymentRecords.containsKey(randKey)){
-				newPaymentID = randKey;
-				break;
+		boolean exist = false;
+		int paymentID = 0;
+		for(int key : paymentObjs.keySet()){
+			if(Integer.parseInt(paymentRecords.get(key).get(1)) == orderNumber){
+				exist = true;
+				paymentID = key;
 			}
 		}
+		
+		if(!exist){
+			List<String> newRecord = new ArrayList<String>();
+			while(true){
+				int randKey = rand .nextInt(300);
+				if(!paymentRecords.containsKey(randKey)){
+					paymentID = randKey;
+					break;
+				}
+			}
 
-		newRecord.add(Integer.toString(customerNumber));
-		newRecord.add(Integer.toString(orderNumber));
-		newRecord.add(Float.toString(totalPrice));
-		newRecord.add("false");
-		newRecord.add(dateFormat.format(date));
-		this.paymentRecords.put(newPaymentID, newRecord);
-		this.paymentObjs.put(newPaymentID, new payment(newPaymentID, newRecord));
+			newRecord.add(Integer.toString(customerNumber));
+			newRecord.add(Integer.toString(orderNumber));
+			newRecord.add(Float.toString(totalPrice));
+			newRecord.add("false");
+			newRecord.add(dateFormat.format(date));
+			this.paymentRecords.put(paymentID, newRecord);
+			this.paymentObjs.put(paymentID, new payment(paymentID, newRecord));
 		
-		try{
-			storeData();
-		}catch(IOException e){
-			
+			try{
+				storeData();
+			}catch(IOException e){
+				
+			}
 		}
-		
-		return newPaymentID;
+		return paymentID;
 	}
 	
 	public void setPaymentStatus(int paymentNum, boolean status){

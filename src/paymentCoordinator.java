@@ -3,15 +3,18 @@ import javax.swing.JOptionPane;
 
 public class paymentCoordinator {
 	private JFrame frame;
-	private makePaymentLogic pay = new makePaymentLogic();;
-
-	private void confirmPayment(int paymentID, int cardID) {
+	private makePaymentLogic pay = new makePaymentLogic();
+	private paymentList paymentList = new paymentList();
+	
+	private boolean confirmPayment(int paymentID, int cardID) {
 		creditCardValidationService creditValidation = new creditCardValidationService();
 		if(creditValidation.cardValidate(cardID)){
 			pay.confirmPayment(paymentID);
+			return true;
 		}
 		else{
 			JOptionPane.showMessageDialog(this.frame, "Credit Card is invalid", "Make Payment", JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
 	}
 	
@@ -23,8 +26,9 @@ public class paymentCoordinator {
 			String insertCardID = JOptionPane.showInputDialog(null,"Insert Credit Card : ","Make payment",JOptionPane.PLAIN_MESSAGE);
 			int paymentID = pay.createPayment(orderID);
 			if(paymentID != 0){
-				confirmPayment(paymentID, Integer.parseInt(insertCardID));
-				JOptionPane.showMessageDialog(this.frame, "Payment Successful", "Make Payment", JOptionPane.PLAIN_MESSAGE);
+				if(confirmPayment(paymentID, Integer.parseInt(insertCardID))){
+					JOptionPane.showMessageDialog(this.frame, "Payment Successful", "Make Payment", JOptionPane.PLAIN_MESSAGE);
+				}
 			}else{
 				JOptionPane.showMessageDialog(this.frame, "Payment has terminated", "Confirm Payment", JOptionPane.ERROR_MESSAGE);
 			}

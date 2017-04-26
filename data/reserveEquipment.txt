@@ -1,6 +1,6 @@
 1 Basketball available
 2 Football available
-3 Basketball available
+3 Basketball reserved
 4 GolfClub available
 5 FitnessGloves available
 6 FitnessGloves available
