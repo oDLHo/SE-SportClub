@@ -7,7 +7,7 @@ public class buyEquipmentLogic {
 	private JFrame frame;
 	private float totalPrice;
 	private sellEquipmentList equipLists = new sellEquipmentList();
-	private orderList orderLists = new orderList();
+	private equipmentOrderList orderLists = new equipmentOrderList();
 	
 	public buyEquipmentLogic(JFrame frame){
 		this.frame = frame;

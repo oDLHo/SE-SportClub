@@ -1,6 +1,6 @@
 public class makePaymentLogic {
 	private paymentList paymentList = new paymentList();
-	private orderList orderLists = new orderList();
+	private equipmentOrderList orderLists = new equipmentOrderList();
 
 	
 	public void confirmPayment(int paymentNum) {

@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class orderList {
+public class equipmentOrderList {
 	
 	private BufferedReader textReader;
 	private Map<Integer, equipmentOrder> orderObjs = new HashMap<Integer, equipmentOrder>();
 	private Map<Integer, List<String>> orderRecords = new HashMap<Integer,List<String>>();
 	private Random rand = new Random();
 	
-	public orderList(){
+	public equipmentOrderList(){
 		try{
 			readFile();
 			for(int key : orderRecords.keySet()){
